@@ -41,6 +41,7 @@ export const handleUpdateClient = (req ,res, segmets) => {
 
       if (clientIndex === -1) {
         sendError(res, 404, "Клиент с данным номером билета не найден");
+        return;
       }
 
       clients[clientIndex] = {
