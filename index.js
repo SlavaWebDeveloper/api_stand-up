@@ -24,11 +24,22 @@ const startServer = async () => {
   const comedians = JSON.parse(comediansData);
 
   http
-    .createServer(async(req, res) => {
+    .createServer(async (req, res) => {
       try {
         res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader(
+          "Access-Control-Allow-Methods", 
+          "GET, POST, PATCH, OPTIONS"
+        );
+        res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        const segmets = req.url.split('/').filter(Boolean);
+        if (req.method === "OPTIONS") {
+          res.writeHead(204);
+          res.end();
+          return;
+        }
+
+        const segmets = req.url.split("/").filter(Boolean);
 
         if (req.method === "GET" && segmets[0] === 'comedians') {
           handleComediansRequest(req ,res, comedians, segmets);
